@@ -59,6 +59,7 @@ class CartController extends Controller
         // }
         //商品詳細画面のhidden属性で送信（Request）された商品IDと注文個数を取得し配列として変数に格納
         //inputタグのname属性を指定し$requestからPOST送信された内容を取得する。
+        
         $cartData = [
             'session_menu_id' => $request->menuId,
             'session_quantity' => $request->quantity,
@@ -96,5 +97,31 @@ class CartController extends Controller
         // dd($cartData);
         return redirect()->route('cart.index');
     }
-    //
+    }
+    
+    public function deleteCart(Request $request)
+    {
+        // セッションからカートを取ってくる。
+        $sessionCartData = $request->session()->get('cartData');
+
+        // 画面から送られた削除する商品を探す
+        
+        // カートから商品削除する
+        
+        foreach ($sessionCartData as $index => $sessionData) {
+               
+            // $sessionDataから、カートに指定された要素のメニューを探す。
+                
+            if ($sessionData['session_menu_id'] === $request->menuId) {
+                //削除する商品が見つかったら削除する 
+                unset($sessionCartData[$index]);
+                break;
+            }
+        }
+
+        //セッションにカートを入れ直す
+            
+        $request->session()->push('cartData', $sessionCartData);       
+        return redirect()->route('cart.index');
+    }
 }

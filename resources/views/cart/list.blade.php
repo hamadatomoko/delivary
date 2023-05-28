@@ -2,6 +2,11 @@
 @section('title', 'リスト')
 @push('scripts')
 <script>
+    /** 
+     * カートの商品数を変更
+     * @param {number} menuId: 商品ID
+     * @param {number} quantity: 追加数量
+     */
     function addCart(menuId, quantity)
     {
         // form要素を生成
@@ -27,6 +32,36 @@
         // formを送信
         document.body.appendChild(form);
         form.submit();
+    }
+    
+    /** 
+     * カートから商品を削除
+     */
+    function deleteCart()
+    {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "{{ url('/cart/delete')}}";
+        
+        // パラメータ設定
+        var input = document.createElement("input");
+        input.type = 'hidden';
+        input.name = 'menuId';
+        input.value = menuId;
+        form.appendChild(input);
+        
+        input = document.createElement("input");
+        input.type = 'hidden';
+        input.name = 'quantity';
+        input.value = quantity;
+        form.appendChild(input);
+        
+        input = document.getElementsByName("_token")[0];
+        form.appendChild(input);
+        // formを送信
+        document.body.appendChild(form);
+        form.submit();
+        
     }
 </script>
 @endpush
@@ -73,7 +108,7 @@
                                     <td>
                                         <button class="btn btn-primary" onclick="addCart({{$cs['menu_id']}}, 1)">+</button>
                                         <button class="btn btn-primary" onclick="addCart({{$cs['menu_id']}}, -1)">-</button>
-                                    <td><buttonclass="ptn ptn-">削除</td>
+                                    <td><button class="ptn ptn-denger"  onclick="deleteCart({{$cs['menu_id']}})">削除</button></td>
                                     </td>
                                     <td></td>
                                 </tr>

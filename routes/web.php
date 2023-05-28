@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth:user'], function () {
     Route::get('menu/detail', 'MenuController@detail')->name('menu.detail');
     // formから遷移してきた場合はpostになる
     Route::post('cart/add', 'CartController@addCart')->name('cart.add');
+    Route::post('cart/delete', 'CartController@deleteCart')->name('cart.delete');
     Route::post('order/confirm', 'OrderController@confirm')->name('order.confirm');
     Route::get('cart/index', 'CartController@index')->name('cart.index');
     Route::get('order/add', 'OrderController@add')->name('order.add');
