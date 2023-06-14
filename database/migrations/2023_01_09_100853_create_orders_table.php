@@ -24,6 +24,8 @@ class CreateOrdersTable extends Migration
             $table->string('address');
             $table->string('tel');
             $table->integer('total_money');
+            $table->integer('syouyu');
+            $table->integer('hashi');
             $table->timestamps();
         });
     }

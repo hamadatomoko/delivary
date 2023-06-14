@@ -37,7 +37,7 @@
     /** 
      * カートから商品を削除
      */
-    function deleteCart()
+    function deleteCart(menuId)
     {
         var form = document.createElement("form");
         form.method = "POST";
@@ -48,12 +48,6 @@
         input.type = 'hidden';
         input.name = 'menuId';
         input.value = menuId;
-        form.appendChild(input);
-        
-        input = document.createElement("input");
-        input.type = 'hidden';
-        input.name = 'quantity';
-        input.value = quantity;
         form.appendChild(input);
         
         input = document.getElementsByName("_token")[0];
@@ -108,13 +102,22 @@
                                     <td>
                                         <button class="btn btn-primary" onclick="addCart({{$cs['menu_id']}}, 1)">+</button>
                                         <button class="btn btn-primary" onclick="addCart({{$cs['menu_id']}}, -1)">-</button>
-                                    <td><button class="ptn ptn-denger"  onclick="deleteCart({{$cs['menu_id']}})">削除</button></td>
                                     </td>
+                                    <td><button class="ptn ptn-denger"  onclick="deleteCart({{$cs['menu_id']}})">削除</button></td>
+                                    
                                     <td></td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <form action="{{ action('OrderController@confirm') }}" method="post" class="form-example">
+                        <div>
+                          <input type="checkbox" id="syouyu" name="syouyu" checked>
+                          <label for="syouyu">お醤油が必要な場合</label>
+                          <input type="checkbox" id="hashi" name="hashi" checked>
+                          <label for="hashi">箸が必要な場合</label>
+                        </div>
+                    </form>    
                     {{ $totalPrice }}
                 </div>
             </div>

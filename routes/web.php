@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:user'], function () {
     Route::post('order/confirm', 'OrderController@confirm')->name('order.confirm');
     Route::get('cart/index', 'CartController@index')->name('cart.index');
     Route::get('order/add', 'OrderController@add')->name('order.add');
+    Route::get('order/information', 'OrderController@information')->name('order.information');
 });
 
 // 管理者のルーティング

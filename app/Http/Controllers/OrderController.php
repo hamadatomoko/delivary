@@ -43,7 +43,10 @@ class OrderController extends Controller
     {
         return redirect('menu/create');
     }
-    
+    public function information(Request $request)
+    {
+        return view('order.order-imfomation');
+    }
     
     //
 }

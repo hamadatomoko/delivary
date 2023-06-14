@@ -19,7 +19,7 @@
       <td>{{$d->name}}</td>
       <td>{{$d->price}}</td>
       <td>
-          <img src="{{ asset('storage/image/' . $d->picture) }}">
+          <img src="{{ asset('storage/image/' . $d->picture) }}" width="10%">
       </td>
       <td><a href="{{ route('menu.detail', ['id'=>$d->id]) }}">詳細</a></td>
     </tr>

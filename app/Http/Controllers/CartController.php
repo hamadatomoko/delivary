@@ -45,6 +45,7 @@ class CartController extends Controller
     
     public function addCart(Request $request)
     {
+        
         // dd($request);
         // カート(session)の中身
         // cartData{
@@ -97,12 +98,14 @@ class CartController extends Controller
         // dd($cartData);
         return redirect()->route('cart.index');
     }
-    }
+    
     
     public function deleteCart(Request $request)
     {
         // セッションからカートを取ってくる。
         $sessionCartData = $request->session()->get('cartData');
+        
+        $request->session()->forget('cartData');
 
         // 画面から送られた削除する商品を探す
         
@@ -113,15 +116,17 @@ class CartController extends Controller
             // $sessionDataから、カートに指定された要素のメニューを探す。
                 
             if ($sessionData['session_menu_id'] === $request->menuId) {
-                //削除する商品が見つかったら削除する 
+                //削除する商品が見つかったら削除する
                 unset($sessionCartData[$index]);
                 break;
             }
         }
 
         //セッションにカートを入れ直す
-            
-        $request->session()->push('cartData', $sessionCartData);       
+        if (!empty($sessionCartData) && count($sessionCartData) > 0) {
+            $request->session()->put('cartData', $sessionCartData);
+        }
+        
         return redirect()->route('cart.index');
     }
 }
