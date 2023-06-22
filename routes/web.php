@@ -23,15 +23,14 @@ Route::get('/', function () {
 // 一般ユーザのルーティング
 Route::group(['middleware' => 'auth:user'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('menu', 'MenuController@index');
+    Route::get('menu', 'MenuController@index')->name('menu.index');
     Route::get('menu/detail', 'MenuController@detail')->name('menu.detail');
     // formから遷移してきた場合はpostになる
     Route::post('cart/add', 'CartController@addCart')->name('cart.add');
     Route::post('cart/delete', 'CartController@deleteCart')->name('cart.delete');
-    Route::post('order/confirm', 'OrderController@confirm')->name('order.confirm');
     Route::get('cart/index', 'CartController@index')->name('cart.index');
-    Route::get('order/add', 'OrderController@add')->name('order.add');
     Route::get('order/information', 'OrderController@information')->name('order.information');
+    Route::get('order/confirm', 'OrderController@confirm')->name('order.confirm');
 });
 
 // 管理者のルーティング

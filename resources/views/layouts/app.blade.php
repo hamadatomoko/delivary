@@ -57,6 +57,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('cart.index') }}">カート</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('menu.index') }}">商品の一覧</a>
+                            </li>
                             
                             <li class="nav-item">
                              <a class="dropdown-item" href="{{ route('admin.logout') }}"
@@ -71,8 +74,8 @@
                             </li>
                         @endguest
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0" action="{{ route('menu.index') }}">
+                      <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
                       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>

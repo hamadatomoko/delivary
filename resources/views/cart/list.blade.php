@@ -122,5 +122,8 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <a href="{{ route('order.information') }}" class="btn btn-primary">お会計に進む</a>
+        </div>
     </div>
 @endsection

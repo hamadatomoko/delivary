@@ -6,7 +6,7 @@
 <p>{{ $menu->name }}</p>
 <p>{{ $menu->price }}</p>
 <p>{{ $menu->details }}</p>
-<p><img src="{{ asset('storage/image/' . $menu->picture) }}"></p>
+<p><img src="{{ asset('storage/image/' . $menu->picture) }}" style="width: 300px"></p>
   <!--データを送るための宛先-->
 <form action="{{ url('/cart/add')}}" method="POST" class="form-horizontal">
     {{ csrf_field() }}

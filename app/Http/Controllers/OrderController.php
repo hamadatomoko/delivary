@@ -9,44 +9,35 @@ use App\Order;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
-        $data = Order::all();
-        //dd($posts);
-        
-        //取得したデータを画面へ渡す
-        return view('menu.index', ['data' => $data]);
-    }
-    public function show(Request $request)
-    {
-        return view('menu.detail', ["order" => Order::find($request->id)]);
-    }
-    public function cart(Request $request)
-    {
-        return redirect('menu/cart');
-    }
-    // お届け先と時間を入力する画面を表示
-    public function add(Request $request)
+    public function information(Request $request)
     {
         $order = new Order;
         $order->address = Auth::user()->address;
         $order->tel = Auth::user()->tel;
-        return view('order.cartlist', ["order" => $order]);
+        return view('order.order-imfomation');
     }
+    
     // お届け先と時間を確認する画面を表示
-    public function comfirm(Request $request)
+    public function confirm(Request $request)
     {
+        // バリデーションチェック(できたら)
+        
+        // 注文情報をセッションへ登録
+        $request->session()->put('', 'todo'); // 住所
+        $request->session()->put('', 'todo'); // 電話番号
+        $request->session()->put('', 'todo'); // ご希望時間
+        
+        // 前画面から来た注文情報とセッションから、
+        // カートの情報を取り出し確認画面へ渡す(CartController.indexアクションを参考)
+        
+        
         return view('menu.detail', ["order" => $order]);
     }
+    
     // 注文を確定するアクション（databaseのorderstableに追加）
     public function complete(Request $request)
     {
         return redirect('menu/create');
     }
-    public function information(Request $request)
-    {
-        return view('order.order-imfomation');
-    }
-    
     //
 }
