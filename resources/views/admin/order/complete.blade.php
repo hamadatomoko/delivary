@@ -1,10 +1,10 @@
 @extends('layouts.app_admin')
-@section('title', '注文詳細画面')
+@section('title', '注文状況編集')
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 mx-auto">
-                <h2>注文詳細</h2>
+                <h2>注文状況編集</h2>
                 <div class="form-group row">
                     <label class="col-md-4" for="title">名前</label>
                     <label class="col-md-6" for="title">{{ $order_form->user->name }}</label>
@@ -38,9 +38,8 @@
                     <label class="col-md-6" for="title">{{ $order_form->total_money }}</label>
                 </div>
                  @if($order_form->order_status == 0)
-                
-                      <a href="{{ route('admin.order.edit', ['id'=>$order_form->id]) }}">編集</a>
-                      <a href="{{ route('admin.order.change', ['id'=>$order_form->id]) }}">配達完了</a>
+                      <a href="/admin/menu/edit">編集</a>
+                      <a href="{{ route('admin.order.change',['id'=>$order_form->id]) }}">配達完了</a>
                   @endif
             </div>
         </div>

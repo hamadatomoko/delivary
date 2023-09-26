@@ -60,7 +60,7 @@
                     <div class="form-group row">
                         <label class="col-md-2" for="title">所要時間</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" name="required_time" value="{{ $menu->required_time}">
+                            <input type="text" class="form-control" name="required_time" value="{{ $menu->required_time}}">
                         </div>
                     </div>
                     {{ csrf_field() }}

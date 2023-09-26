@@ -20,12 +20,12 @@ class CreateOrdersTable extends Migration
             $table->boolean('order_status');
             $table->datetime('estiimated_delivery_time');
             $table->integer('tax');
-            $table->string('memo');
+            $table->string('memo')->nullable();
             $table->string('address');
             $table->string('tel');
             $table->integer('total_money');
-            $table->integer('syouyu');
-            $table->integer('hashi');
+            $table->integer('syouyu')->nullable();
+            $table->integer('hashi')->nullable();
             $table->timestamps();
         });
     }

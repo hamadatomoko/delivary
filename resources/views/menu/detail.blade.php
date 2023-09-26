@@ -10,6 +10,11 @@
   <!--データを送るための宛先-->
 <form action="{{ url('/cart/add')}}" method="POST" class="form-horizontal">
     {{ csrf_field() }}
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="wasabi" value="true">ワサビなし
+      </label>
+    </div>
     <select name='quantity'>
         <option value='1'>1人前</option>
         <option value='2'>2人前</option>

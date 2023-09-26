@@ -16,18 +16,20 @@
       </tr>
   </thead>
   <tbody>
-      @foreach($data as $d)
+      @foreach($orders as $d)
           <tr>
               <th>{{ $d->ordered_at }}</th>
               <td>{{ $d->user->name }}</td>
               <td>{{ $d->estiimated_delivery_time}}</td>
+
               <td>
               @if($d->order_status == 0)
                       <p>未配達</p>
                @else($d->order_status == 1)         
                       <p >配達済み</p>
                @endif 
-               </td>      
+               </td> 
+
  <td><a href="{{ route('admin.order.detail',['id'=>$d->id]) }}">詳細</a></td>            
           </tr>
       @endforeach

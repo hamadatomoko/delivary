@@ -30,7 +30,8 @@ Route::group(['middleware' => 'auth:user'], function () {
     Route::post('cart/delete', 'CartController@deleteCart')->name('cart.delete');
     Route::get('cart/index', 'CartController@index')->name('cart.index');
     Route::get('order/information', 'OrderController@information')->name('order.information');
-    Route::get('order/confirm', 'OrderController@confirm')->name('order.confirm');
+    Route::post('order/confirm', 'OrderController@confirm')->name('order.confirm');
+    Route::post('order/complete', 'OrderController@complete')->name('order.complete');
 });
 
 // 管理者のルーティング
@@ -39,9 +40,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('login', 'Admin\LoginController@login');
 });
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
-    Route::get('/', function () {
-        return redirect('/admin/home');
-    });
+    // Route::get('/', function () {
+    //     return redirect('/admin/home');
+    // });
+    
     Route::post('logout', 'Admin\LoginController@logout')->name('admin.logout');
     Route::get('home', 'Admin\HomeController@index')->name('admin.home');
     Route::get('menu/create', 'Admin\MenuController@add')->name('admin.menu.add');
@@ -52,7 +54,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('order', 'Admin\OrderController@index')->name('admin.order');
     Route::get('order/detail/{id}', 'Admin\OrderController@detail')->name('admin.order.detail');
     Route::get('order/change/{id}', 'Admin\OrderController@change_order_status')->name('admin.order.change');
-    
+    Route::get('order/edit/{id}', 'Admin\OrderController@edit')->name('admin.order.edit');
+    Route::post('order/edit/{id}', 'Admin\OrderController@update')->name('admin.order.update');
     Route::get('user', 'Admin\UserController@index')->name('admin.user');
     Route::get('user/{id}', 'Admin\UserController@detail')->name('admin.user.detail');
 });

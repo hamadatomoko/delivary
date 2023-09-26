@@ -27,7 +27,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/home';
+    //  管理者がログインすると注文一覧の画面に遷移する
+    protected $redirectTo = '/admin/order';
 
     /**
      * Create a new controller instance.

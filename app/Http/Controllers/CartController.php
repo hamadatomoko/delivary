@@ -15,8 +15,9 @@ class CartController extends Controller
         $cartData = array();
         if ($request->session()->has('cartData')) {
             $cartData = array_values($request->session()->get('cartData'));
+            // dd($cartData);
         }
-        
+        // 引数にセッションキーを指定することでそのキーの値を取得することができます
         if (!empty($cartData)) {
             $sessionProductsId = array_column($cartData, 'session_menu_id');
             $menus = Menu::find($sessionProductsId);
@@ -36,7 +37,8 @@ class CartController extends Controller
                 $data['itemPrice'] = $data['price'] * $data['session_quantity'];
                 $totalPrice += $data['itemPrice'];
             }
-
+            // itemPriceに値段かける量に入れてあげている（それぞれの商品の合計が入っている）
+            //  $totalPriceに合計値を足している。
             unset($data);
         }
         

@@ -17,12 +17,14 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            if ($guard == 'admin') {
-                return redirect('/admin/home');
-            } else {
-                return redirect('/home');
-            }
+        
+        // 一般ユーザの場合
+        if (Auth::guard('user')->check()) {
+            return redirect('/home');
+             
+        // 管理ユーザの場合
+        } elseif (Auth::guard('admin')->check()) {
+            return redirect('/admin/order');
         }
 
         return $next($request);

@@ -9,15 +9,12 @@ class OrderDetail extends Model
     protected $guarded = array('id');
    
     public static $rules = array(
-        'ID' => 'required',
-        'orderd_id' => 'required',
+       
+        'order_id' => 'required',
         'menu_id' => 'required',
         'quantity' => 'required',
         'wasabi' => 'required',
         'large' => 'required',
-        'total_money' => 'required|integer',
-        'tax' => 'required',
-        'memo' => 'required',
     );
     public function user()
     {
