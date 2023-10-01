@@ -8,9 +8,11 @@ use App\Menu;
 use App\Order;
 use App\OrderDetail;
 use Carbon\Carbon;
+use App\Traits\SessionTrait;
 
 class OrderController extends Controller
 {
+    use SessionTrait;
     public function information(Request $request)
     {
         // 現在認証しているユーザーを取得
@@ -34,12 +36,13 @@ class OrderController extends Controller
         // dd($carbon);
         
         // 注文情報をセッションへ登録
-        $request->session()->put('address', $request->address); // 住所       値を保存する
-        $request->session()->put('tel', $request->tel); // 電話番号
-        $request->session()->put('appt', $request->appt); // ご希望時間
-        $request->session()->put('memo', $request->memo);
-        $request->session()->put('syouyu', $request->syouyu);
-        $request->session()->put('hashi', $request->hashi);
+        // $request->session()->put('address', $request->address); // 住所       値を保存する
+        // $request->session()->put('tel', $request->tel); // 電話番号
+        // $request->session()->put('appt', $request->appt); // ご希望時間
+        // $request->session()->put('memo', $request->memo);
+        // $request->session()->put('syouyu', $request->syouyu);
+        // $request->session()->put('hashi', $request->hashi);
+        $this->set_session($request);
         // 前画面から来た注文情報とセッションから、
         // カートの情報を取り出し確認画面へ渡す(CartController.indexアクションを参考)
         
@@ -47,6 +50,7 @@ class OrderController extends Controller
         $tel = $request->tel;
         $appt = $request->appt;
         $syouyu = $request->syouyu;
+        $tax = 0;
         // dd($address, $tel, $appt);
         $totalPrice = 0;
         
@@ -162,6 +166,17 @@ class OrderController extends Controller
         
         return view('order.complete');
     }
+    
+    // private function set_session(Request $request)
+    // {
+    //     $request->session()->put('address', $request->address); // 住所       値を保存する
+    //     $request->session()->put('tel', $request->tel); // 電話番号
+    //     $request->session()->put('appt', $request->appt); // ご希望時間
+    //     $request->session()->put('memo', $request->memo);
+    //     $request->session()->put('syouyu', $request->syouyu);
+    //     $request->session()->put('hashi', $request->hashi);
+    // }
+    
     //
 }
 // / 注文をDBに追加
