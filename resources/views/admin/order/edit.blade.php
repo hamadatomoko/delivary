@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <h2>注文状況編集</h2>
-                <form action="{{ url('admin/order/edit/' . $order->id)}}" method="POST" class="form-horizontal">
+                <form action="{{ url('admin/order/confirm')}}" method="POST" class="form-horizontal">
                     @csrf
                    {{-- <input type="hidden" name="_method" value="put">--}}
                     <div class="form-group row">
@@ -14,7 +14,7 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4" for="title">お届け希望時間</label>
-                        <input type="datetime-local" id="appt" name="estiimated_delivery_time" value="{{ $order->estiimated_delivery_time }}" min="{{$minTime}}" required>
+                        <input type="datetime-local" id="appt" name="appt" value="{{ $order->estiimated_delivery_time }}" min="{{$minTime}}" required>
                     </div>
                     <a href="javascript:OnButtonClick();">商品追加</a> 
                     <!--23行目　最初データベースから取ってき値を表示する（$detail->menu_id）。送信ボタンを押してバシデーションエラーでこの画面に戻って来た時にはsseccionに保存してあるdataを使えます。-->
@@ -27,7 +27,7 @@
                         @foreach($order->details as $detail)
                             <div class="form-group row item">
                                 <select class="form-select" id="menu-id" name="menu_id[]">
-                                @foreach( $menu as $item)
+                                @foreach($menu as $item)
                                     @php $n = "menu_id." . $i @endphp
                                     <option value="{{ $item->id }}" @if(old($n, $detail->menu_id) == $item->id) selected="selected" @endif>{{ $item->name }}</option>
                                 @endforeach
@@ -61,19 +61,12 @@
                         <label class="col-md-4" for="title">電話番号</label>
                         <label class="col-md-6" for="title"><input type="text" name="tel" value="{{ $order->tel }}"></label>
                     </div>
-                    <!--<div class="form-group row">-->
-                    <!--    <label class="col-md-4" for="title">備考</label>-->
-                    <!--    <label class="col-md-6" for="title">{{ $order->memo}}</label>-->
-                    <!--</div>-->
-                    <!--<div class="form-group row">-->
-                    <!--    <label class="col-md-4" for="title">値段</label>-->
-                    <!--    <label class="col-md-6" for="title">{{ $order->total_money }}</label>-->
-                    <!--</div>-->
+                    
                     <input type="hidden" name="id" value={{ $order->id }}>
-                    <input type="submit" value="更新">
+                    <input type="submit" value="確認">
                     @if($order->order_status == 0)
                     
-                          <a href="{{ route('admin.order.edit', ['id'=>$order->id]) }}">編集</a>
+                          
                           <a href="{{ route('admin.order.change', ['id'=>$order->id]) }}">配達完了</a>
                     @endif
                 </form>

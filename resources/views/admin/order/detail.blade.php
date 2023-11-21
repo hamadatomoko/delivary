@@ -18,6 +18,8 @@
                     @foreach($order_form->details as $detail )
                     {{$detail->menu->name}}
                     {{$detail->quantity}}
+                    {{$detail->wasabi== 1 ? "ワサビあり" : "ワサビなし"}}
+                    {{$detail->large== 1 ? "大盛り" : "普通"}}
                     @endforeach
                     <label class="col-md-6" for="title">{{ $order_form->orderd_id }}</label>
                 </div>

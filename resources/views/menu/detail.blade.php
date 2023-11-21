@@ -13,6 +13,13 @@
     <div class="form-check">
       <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="wasabi" value="true">ワサビなし
+        
+      </label>
+    </div>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" name="large" value="true">大盛り
+        
       </label>
     </div>
     <select name='quantity'>

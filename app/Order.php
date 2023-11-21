@@ -14,7 +14,7 @@ class Order extends Model
         'orderd_at' => 'required',
         'user_id' => 'required',
         'order_status' => 'required',
-        'estiimated _delivery_ time' => 'required',
+        'estiimated_delivery_ time' => 'required',
         'total_money' => 'required|integer',
         'tax' => 'required',
         'memo' => 'required',
@@ -29,6 +29,7 @@ class Order extends Model
     
     public function map($user_id, $data)
     {
+        // セッションからとってきたデータを加工,連想配列　からのインスタンスに具体的全ての値をセットする
         $this->user_id = $user_id;
         $this->estiimated_delivery_time = $data["appt"];
         $this->tel = $data["tel"];

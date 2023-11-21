@@ -45,7 +45,6 @@
                     <p>お醤油{{$syouyu ? "必要" : "不要"}}</p> 
                     <p>税抜き価格：{{ $totalPrice }}</p>
                     <p>税込価格： {{ $tax }}</p>
-                    <input type="hidden" name = "tax" value = {{$tax}}>
                 </div>
             </div>
         </div>

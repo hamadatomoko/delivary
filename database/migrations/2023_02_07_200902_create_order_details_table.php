@@ -18,8 +18,10 @@ class CreateOrderDetailsTable extends Migration
             $table->integer('order_id');
             $table->integer('menu_id');
             $table->integer('quantity');
-            $table->boolean('wasabi');
-            $table->boolean('large');
+            // わさび。大森は数字型に戻す→マイグレーションをやりなおす
+            
+            $table->integer('wasabi');
+            $table->integer('large');
             $table->timestamps();
         });
     }

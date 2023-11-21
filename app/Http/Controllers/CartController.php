@@ -8,16 +8,21 @@ use App\Menu;
 
 class CartController extends Controller
 {
+    use \App\Traits\SessionTrait;
+    
     public function index(Request $request)
     {
         $totalPrice = 0;
         
-        $cartData = array();
-        if ($request->session()->has('cartData')) {
-            $cartData = array_values($request->session()->get('cartData'));
-            // dd($cartData);
-        }
+        $cartData = $this->getCartDataFromSession($request);
+        // dd($cartData);
+        
+        // if ($request->session()->has('cartData')) {
+        //     $cartData = array_values($request->session()->get('cartData'));
+        // dd($cartData);
+        // }
         // 引数にセッションキーを指定することでそのキーの値を取得することができます
+        // test($cartData);
         if (!empty($cartData)) {
             $sessionProductsId = array_column($cartData, 'session_menu_id');
             $menus = Menu::find($sessionProductsId);
@@ -66,6 +71,8 @@ class CartController extends Controller
         $cartData = [
             'session_menu_id' => $request->menuId,
             'session_quantity' => $request->quantity,
+            'session_wasabi' => $request->wasabi,
+            'session_large' => $request->large,
         ];
 
         //sessionにcartData配列が「無い」場合、商品情報の配列をcartData(key)という名で$cartDataをSessionに追加
@@ -80,16 +87,25 @@ class CartController extends Controller
             foreach ($sessionCartData as $index => $sessionData) {
                 //product_idが同一であれば、フラグをtrueにする → 個数の合算処理、及びセッション情報更新。更新は一度のみ
 
-                if ($sessionData['session_menu_id'] === $cartData['session_menu_id']) {
+                if (
+                    // 商品番号が同じで
+                    ($sessionData['session_menu_id'] === $cartData['session_menu_id']) &&
+                    // ワサビ、有り無しも同じで
+                    ($sessionData['session_wasabi'] === $cartData['session_wasabi']) &&
+                    // 大盛の有無も同じなら
+                    ($sessionData['session_large'] === $cartData['session_large'])
+                    ) {
+                    // 全く同じ商品の追加なので、注文数だけを増やす。
                     $isSameProductId = true;
                     $quantity = $sessionData['session_quantity'] + $cartData['session_quantity'];
                     //cartDataをrootとしたツリー状の多次元連想配列の特定のValueにアクセスし、指定の変数でValueの上書き処理
+                    $isSameProductId = true;
                     $request->session()->put('cartData.' . $index . '.session_quantity', $quantity);
                     break;
                 }
             }
 
-            //product_idが同一ではない状態を指定 その場合であればpushする
+            // 違う商品か、商品が同じでもワサビや大盛の設定が違う注文は新たにカートに商品を追加する。
             if ($isSameProductId === false) {
                 $request->session()->push('cartData', $cartData);
             }
@@ -105,9 +121,10 @@ class CartController extends Controller
     public function deleteCart(Request $request)
     {
         // セッションからカートを取ってくる。
-        $sessionCartData = $request->session()->get('cartData');
+        // $sessionCartData = $request->session()->get('cartData');
         
-        $request->session()->forget('cartData');
+        // $request->session()->forget('cartData');
+        $sessionCartData = $this->get_session_data($request, "cartData");
 
         // 画面から送られた削除する商品を探す
         
@@ -130,5 +147,41 @@ class CartController extends Controller
         }
         
         return redirect()->route('cart.index');
+    }
+    
+    private function getCartDataFromSession(Request $request)
+    {
+        $cartData = array();
+        if ($request->session()->has('cartData')) {
+            $cartData = array_values($request->session()->get('cartData'));
+        }
+        return $cartData;
+    }
+    
+    private function test(&$cartData)
+    {
+        if (!empty($cartData)) {
+            $sessionProductsId = array_column($cartData, 'session_menu_id');
+            $menus = Menu::find($sessionProductsId);
+            foreach ($cartData as $index => &$data) {
+                // 商品IDでmenuモデルを絞り込む
+                $menu = $menus->find($data['session_menu_id']);
+                
+                //二次元目の配列を指定している$dataに'product〜'key生成 Modelオブジェクト内の各カラムを代入
+                //＆で参照渡し 仮引数($data)の変更で実引数($cartData)を更新する
+                
+                $data['menu_id'] = $menu->id;
+                $data['product_name'] = $menu->name;
+                $data['category_name'] = $menu->category->name;
+                $data['price'] = $menu->price;
+                $data['quantity'] = $data['session_quantity'];
+                //商品小計の配列作成し、配列の追加
+                $data['itemPrice'] = $data['price'] * $data['session_quantity'];
+                $totalPrice += $data['itemPrice'];
+            }
+            // itemPriceに値段かける量に入れてあげている（それぞれの商品の合計が入っている）
+            //  $totalPriceに合計値を足している。
+            unset($data);
+        }
     }
 }

@@ -55,6 +55,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('order/detail/{id}', 'Admin\OrderController@detail')->name('admin.order.detail');
     Route::get('order/change/{id}', 'Admin\OrderController@change_order_status')->name('admin.order.change');
     Route::get('order/edit/{id}', 'Admin\OrderController@edit')->name('admin.order.edit');
+    Route::post('order/confirm', 'Admin\OrderController@confirm')->name('admin.order.confirm');
     Route::post('order/edit/{id}', 'Admin\OrderController@update')->name('admin.order.update');
     Route::get('user', 'Admin\UserController@index')->name('admin.user');
     Route::get('user/{id}', 'Admin\UserController@detail')->name('admin.user.detail');

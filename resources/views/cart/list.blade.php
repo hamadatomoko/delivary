@@ -21,11 +21,26 @@
         input.value = menuId;
         form.appendChild(input);
         
+        // 商品の数量
         input = document.createElement("input");
         input.type = 'hidden';
         input.name = 'quantity';
         input.value = quantity;
         form.appendChild(input);
+        
+        // // わさびの数量
+        // input = document.createElement("input");
+        // input.type = 'hidden';
+        // input.name = 'wasabi';
+        // input.value = 0;
+        // form.appendChild(input);
+        
+        // // 大盛りの数量
+        // input = document.createElement("input");
+        // input.type = 'hidden';
+        // input.name = 'large';
+        // input.value = 0;
+        // form.appendChild(input);
         
         input = document.getElementsByName("_token")[0];
         form.appendChild(input);
@@ -86,11 +101,12 @@
                     <table class="table table-dark">
                         <thead>
                             <tr>
-                                <th width="10%">ID</th>
-                                <th width="20%">タイトル</th>
-                                <th width="50%">本文</th>
-                                <th width="30%"></th>
-                                <th width="30%"></th>
+                                <th width="10%">品物</th>
+                                <th width="20%">価格</th>
+                                <th width="10%">個数</th>
+                                <th width="20%">ワサビ抜き</th>
+                                <th width="20%">大盛り</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -98,10 +114,18 @@
                                 <tr>
                                     <th>{{ $cs['product_name'] }}</th>
                                     <td>{{ $cs['price']}}</td>
-                                    <td>{{ $cs['quantity'] }}</td>
                                     <td>
+                                        {{ $cs['quantity'] }}
                                         <button class="btn btn-primary" onclick="addCart({{$cs['menu_id']}}, 1)">+</button>
                                         <button class="btn btn-primary" onclick="addCart({{$cs['menu_id']}}, -1)">-</button>
+                                    </td>
+                                    <td>{{ $cs['session_wasabi'] == true ? "⚪︎" : "×" }}
+                                    
+                                    </td>    
+　　　　　　　　　　　　　　　　　　<td>{{ $cs['session_large'] == true ? "⚪︎" : "×" }}
+　　　　　　　　　　　　　　　　　
+                                    <td>
+                                        
                                     </td>
                                     <td><button class="ptn ptn-denger"  onclick="deleteCart({{$cs['menu_id']}})">削除</button></td>
                                     
